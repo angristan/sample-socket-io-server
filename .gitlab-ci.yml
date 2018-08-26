@@ -1,0 +1,22 @@
+image: node:10-stretch
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - install
+  - deploy
+
+npm_install:
+  stage: install
+  script:
+   - npm install
+
+heroku:
+  stage: deploy
+  script:
+    - apt-get update -yq
+    - apt-get install rubygems ruby-dev -y
+    - gem install dpl
+    - dpl --provider=heroku --app=sample-socket-io-server --api-key=$HEROKU_API_KEY

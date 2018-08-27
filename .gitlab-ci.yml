@@ -8,15 +8,17 @@ stages:
   - install
   - deploy
 
-npm_install:
+Install modules:
   stage: install
   script:
    - npm install
 
-heroku:
+Deploy to Heroku:
   stage: deploy
   script:
     - apt-get update -yq
     - apt-get install rubygems ruby-dev -y
     - gem install dpl
     - dpl --provider=heroku --app=sample-socket-io-server --api-key=$HEROKU_API_KEY
+  only:
+    - master
